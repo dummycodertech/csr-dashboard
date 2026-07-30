@@ -18,18 +18,33 @@ const EMPTY = {
 
 export function FilterProvider({ children }) {
   const [filters, setFilters] = useState(EMPTY)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const filteredData = useMemo(() => {
     const entries = Object.entries(filters)
-    // fast path: no filters active
-    if (entries.every(([, v]) => v.length === 0)) return allEmployees
+    const lowerQuery = searchQuery.trim().toLowerCase()
+    
+    // fast path: no filters active and no search query
+    if (entries.every(([, v]) => v.length === 0) && !lowerQuery) return allEmployees
+
     return allEmployees.filter(emp => {
+      // 1. Check search query across relevant text fields
+      if (lowerQuery) {
+        const matchesSearch = [
+          emp.name, emp.ecode, emp.location, emp.project, 
+          emp.role, emp.business, emp.state, emp.region
+        ].some(val => val && val.toString().toLowerCase().includes(lowerQuery))
+        
+        if (!matchesSearch) return false
+      }
+
+      // 2. Check sidebar filters
       for (const [key, values] of entries) {
         if (values.length > 0 && !values.includes(emp[key])) return false
       }
       return true
     })
-  }, [filters])
+  }, [filters, searchQuery])
 
   const activeFilterCount = useMemo(
     () => Object.values(filters).reduce((n, arr) => n + arr.length, 0),
@@ -37,7 +52,10 @@ export function FilterProvider({ children }) {
   )
 
   const setFilter = (key, values) => setFilters(prev => ({ ...prev, [key]: values }))
-  const clearAllFilters = () => setFilters(EMPTY)
+  const clearAllFilters = () => {
+    setFilters(EMPTY)
+    setSearchQuery('')
+  }
 
   return (
     <FilterContext.Provider value={{
@@ -47,6 +65,8 @@ export function FilterProvider({ children }) {
       filteredData,
       totalData: allEmployees,
       activeFilterCount,
+      searchQuery,
+      setSearchQuery
     }}>
       {children}
     </FilterContext.Provider>

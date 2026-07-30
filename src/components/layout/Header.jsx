@@ -8,8 +8,8 @@ import { fmtNum } from '../../utils/dataUtils'
 
 export default function Header() {
   const { isDark, toggle } = useTheme()
-  const { filteredData, totalData, activeFilterCount } = useFilters()
-  const isFiltered = filteredData.length !== totalData.length
+  const { filteredData, totalData, activeFilterCount, searchQuery, setSearchQuery } = useFilters()
+  const isFiltered = filteredData.length !== totalData.length || !!searchQuery
 
   return (
     <header
@@ -47,13 +47,27 @@ export default function Header() {
       {/* Center: search */}
       <div className="search-bar flex-1 max-w-md hidden md:flex">
         <Search size={14} className="text-tx-body flex-shrink-0" />
-        <input placeholder="Search employees, locations, projects…" readOnly />
-        <span
-          className="text-[10px] text-tx-muted font-mono hidden lg:block flex-shrink-0 ml-auto border border-[var(--border)] rounded-md px-1.5 py-0.5"
-          style={{ background: 'var(--surface-3)' }}
-        >
-          ⌘K
-        </span>
+        <input 
+          placeholder="Search employees, locations, projects…" 
+          value={searchQuery || ''}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ width: '100%' }}
+        />
+        {searchQuery ? (
+          <button 
+            onClick={() => setSearchQuery('')}
+            className="text-tx-muted hover:text-tx-strong flex-shrink-0 ml-auto flex items-center justify-center w-5 h-5 rounded-md hover:bg-surface-3 transition-colors"
+          >
+            ✕
+          </button>
+        ) : (
+          <span
+            className="text-[10px] text-tx-muted font-mono hidden lg:block flex-shrink-0 ml-auto border border-[var(--border)] rounded-md px-1.5 py-0.5"
+            style={{ background: 'var(--surface-3)' }}
+          >
+            ⌘K
+          </span>
+        )}
       </div>
 
       {/* Right: date + actions */}
