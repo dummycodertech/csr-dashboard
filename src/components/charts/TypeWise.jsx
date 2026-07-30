@@ -22,10 +22,11 @@ const renderLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, name
   )
 }
 
-const Tip = ({ active, payload }) => {
+const Tip = ({ active, payload, total }) => {
   if (!active || !payload?.length) return null
-  const { name, value, percent } = payload[0]
+  const { name, value } = payload[0]
   const color = COLORS[name]?.solid || '#5B5BD6'
+  const percent = total > 0 ? value / total : 0
   return (
     <div className="chart-tooltip">
       <div className="chart-tooltip-title">{name}</div>
@@ -82,7 +83,7 @@ export default function TypeWise() {
               />
             ))}
           </Pie>
-          <Tooltip content={<Tip />} />
+          <Tooltip content={<Tip total={filteredData.length} />} />
         </PieChart>
       </ResponsiveContainer>
 
