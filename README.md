@@ -22,7 +22,7 @@ Deploy to Vercel — see [Deployment](#deployment) below.
 
 ## Features
 
-- **10 chart panels**: Headcount by BU, Gender ratio, Age group distribution, Onroll/Offroll, Cost by BU, Retiring in 3 yrs, Project-wise table, Region summary, Top-10 locations, State-wise table
+- **16 chart panels**: Headcount by BU, Gender ratio, Age group distribution, Onroll/Offroll, Cost by BU, Retiring in 3 yrs, Project-wise table, Region summary, Top-10 locations, State-wise table, CTC Salary Band Distribution, Tenure vs Retirement Risk, Salary Heatmap, Hiring Vintage, Project Health Radar, Gender & Employment Type by Business
 - **4 KPI cards**: Total headcount, Total CTC (Cr), Avg CTC (L), % Retiring in 3 yrs
 - **Global filter sidebar**: 10 multi-select filters (Gender, Type, Business, Age Group, Region, State, Project, Role, Location, Retiring) — all charts and KPIs react live
 - **Light / dark mode**: toggle in the header, persisted to localStorage
@@ -126,7 +126,13 @@ csr-dashboard/
             ├── ProjectWiseTable.jsx
             ├── RegionTable.jsx
             ├── Top10Locations.jsx
-            └── StateWise.jsx
+            ├── StateWise.jsx
+            ├── CTCDistribution.jsx
+            ├── TenureTrend.jsx
+            ├── SalaryHeatmap.jsx
+            ├── ProjectRadar.jsx
+            ├── HiringVintage.jsx
+            └── GenderBusinessMatrix.jsx
 ```
 
 ## Disclaimer
