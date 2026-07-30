@@ -16,9 +16,10 @@ const TENURE_BANDS = [
 
 const Tip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null
-  const total   = payload.find(p => p.name === 'Headcount')?.value || 0
-  const retiring = payload.find(p => p.name === 'Retiring Soon')?.value || 0
-  const avgCtc  = payload.find(p => p.dataKey === 'avgCtc')?.value || 0
+  const data = payload[0].payload
+  const total = data.Headcount || 0
+  const retiring = data['Retiring Soon'] || 0
+  const avgCtc = data.avgCtc || 0
   return (
     <div className="chart-tooltip">
       <div className="chart-tooltip-title">Tenure: {label}</div>

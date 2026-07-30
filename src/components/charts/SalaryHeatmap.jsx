@@ -47,7 +47,7 @@ export default function SalaryHeatmap() {
   return (
     <div style={{ padding: '8px 4px', height: '100%', display: 'flex', flexDirection: 'column', gap: 12 }}>
       {/* Column headers */}
-      <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr 1fr', gap: 10 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr 1fr 1fr', gap: 10 }}>
         <div />
         {BUSINESSES.map(biz => (
           <div key={biz} style={{
